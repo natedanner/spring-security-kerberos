@@ -34,7 +34,7 @@ public class JaasSubjectHolder {
     private Subject jaasSubject;
     private String username;
 
-    private Map<String, byte[]> savedTokens = new HashMap<String, byte[]>();
+    private Map<String, byte[]> savedTokens = new HashMap<>();
 
     public JaasSubjectHolder(Subject jaasSubject) {
         this.jaasSubject = jaasSubject;

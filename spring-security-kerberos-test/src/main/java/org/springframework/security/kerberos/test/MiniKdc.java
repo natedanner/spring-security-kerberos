@@ -153,7 +153,7 @@ public class MiniKdc {
 	public static final String TRANSPORT = "transport";
 	public static final String DEBUG = "debug";
 
-	private static final Set<String> PROPERTIES = new HashSet<String>();
+	private static final Set<String> PROPERTIES = new HashSet<>();
 	private static final Properties DEFAULT_CONFIG = new Properties();
 
 	static {
@@ -190,11 +190,11 @@ public class MiniKdc {
 		return (Properties) DEFAULT_CONFIG.clone();
 	}
 
-	private Properties conf;
+	private final Properties conf;
 	private SimpleKdcServer simpleKdc;
 	private int port;
-	private String realm;
-	private File workDir;
+	private final String realm;
+	private final File workDir;
 	private File krb5conf;
 	private String transport;
 	private boolean krb5Debug;
@@ -215,7 +215,7 @@ public class MiniKdc {
 	 */
 	public MiniKdc(Properties conf, File workDir) throws Exception {
 		if (!conf.keySet().containsAll(PROPERTIES)) {
-			Set<String> missingProperties = new HashSet<String>(PROPERTIES);
+			Set<String> missingProperties = new HashSet<>(PROPERTIES);
 			missingProperties.removeAll(conf.keySet());
 			throw new IllegalArgumentException("Missing configuration properties: "
 					+ missingProperties);
@@ -309,10 +309,10 @@ public class MiniKdc {
 			port = NetworkUtil.getServerPort();
 		}
 		if (transport != null) {
-			if (transport.trim().equals("TCP")) {
+			if ("TCP".equals(transport.trim())) {
 				simpleKdc.setKdcTcpPort(port);
 				simpleKdc.setAllowUdp(false);
-			} else if (transport.trim().equals("UDP")) {
+			} else if ("UDP".equals(transport.trim())) {
 				simpleKdc.setKdcUdpPort(port);
 				simpleKdc.setAllowTcp(false);
 			} else {

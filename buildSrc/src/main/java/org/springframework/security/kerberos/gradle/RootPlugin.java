@@ -74,7 +74,7 @@ class RootPlugin implements Plugin<Project> {
 			options.addStringOption("Xdoclint:none", "-quiet");
 		});
 
-		project.getRootProject().getSubprojects().forEach(p -> {
+		project.getRootProject().getSubprojects().forEach(p ->
 			p.getPlugins().withType(ModulePlugin.class, m -> {
 				JavaPluginConvention java = p.getConvention().getPlugin(JavaPluginConvention.class);
 				SourceSet mainSourceSet = java.getSourceSets().getByName("main");
@@ -84,8 +84,7 @@ class RootPlugin implements Plugin<Project> {
 				p.getTasks().withType(Javadoc.class, j -> {
 					api.setClasspath(api.getClasspath().plus(j.getClasspath()));
 				});
-			});
-		});
+			}));
 		return api;
 	}
 

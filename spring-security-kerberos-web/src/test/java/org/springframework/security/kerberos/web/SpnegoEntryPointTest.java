@@ -39,7 +39,7 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class SpnegoEntryPointTest {
 
-	private SpnegoEntryPoint entryPoint = new SpnegoEntryPoint();
+	private final SpnegoEntryPoint entryPoint = new SpnegoEntryPoint();
 
 	@Test
 	public void testEntryPointOk() throws Exception {

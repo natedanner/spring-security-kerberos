@@ -22,6 +22,7 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaTestFixturesPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.publish.PublishingExtension;
+import org.gradle.api.publish.VariantVersionMappingStrategy;
 import org.gradle.api.publish.maven.MavenPublication;
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
 
@@ -40,27 +41,25 @@ public class ManagementConfigurationPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 		ConfigurationContainer configurations = project.getConfigurations();
-		configurations.create(MANAGEMENT_CONFIGURATION_NAME, (management) -> {
+		configurations.create(MANAGEMENT_CONFIGURATION_NAME, management -> {
 			management.setVisible(false);
 			management.setCanBeConsumed(false);
 			management.setCanBeResolved(false);
 			PluginContainer plugins = project.getPlugins();
-			plugins.withType(JavaPlugin.class, (javaPlugin) -> {
-				configurations.getByName(JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME).extendsFrom(management);
-			});
-			plugins.withType(JavaTestFixturesPlugin.class, (javaTestFixturesPlugin) -> {
+			plugins.withType(JavaPlugin.class, javaPlugin ->
+				configurations.getByName(JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME).extendsFrom(management));
+			plugins.withType(JavaTestFixturesPlugin.class, javaTestFixturesPlugin -> {
 				configurations.getByName("testFixturesCompileClasspath").extendsFrom(management);
 				configurations.getByName("testFixturesRuntimeClasspath").extendsFrom(management);
 			});
-			plugins.withType(OptionalDependenciesPlugin.class, (optionalDependencies) -> configurations
+			plugins.withType(OptionalDependenciesPlugin.class, optionalDependencies -> configurations
 				.getByName(OptionalDependenciesPlugin.OPTIONAL_CONFIGURATION_NAME).extendsFrom(management));
-			plugins.withType(MavenPublishPlugin.class, (mavenPublish) -> {
+			plugins.withType(MavenPublishPlugin.class, mavenPublish -> {
 				PublishingExtension publishing = project.getExtensions().getByType(PublishingExtension.class);
-				publishing.getPublications().withType(MavenPublication.class, (mavenPublication -> {
-					mavenPublication.versionMapping((versions) ->
-							versions.allVariants(versionMapping -> versionMapping.fromResolutionResult())
-					);
-				}));
+				publishing.getPublications().withType(MavenPublication.class, (mavenPublication ->
+					mavenPublication.versionMapping(versions ->
+							versions.allVariants(VariantVersionMappingStrategy::fromResolutionResult)
+					)));
 			});
 		});
 	}

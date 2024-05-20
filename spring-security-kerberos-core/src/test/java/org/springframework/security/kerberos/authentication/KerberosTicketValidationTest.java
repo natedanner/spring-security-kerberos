@@ -12,11 +12,11 @@ import static org.mockito.Mockito.mock;
 
 public class KerberosTicketValidationTest {
 
-    private String username = "username";
-    private Subject subject = new Subject();
-    private byte[] responseToken = "token".getBytes();
-    private GSSContext gssContext = mock(GSSContext.class);
-    private GSSCredential delegationCredential = mock(GSSCredential.class);
+	private final String username = "username";
+	private final Subject subject = new Subject();
+	private final byte[] responseToken = "token".getBytes();
+	private final GSSContext gssContext = mock(GSSContext.class);
+	private final GSSCredential delegationCredential = mock(GSSCredential.class);
 
     @Test
     public void createResultOfTicketValidationWithSubject() {

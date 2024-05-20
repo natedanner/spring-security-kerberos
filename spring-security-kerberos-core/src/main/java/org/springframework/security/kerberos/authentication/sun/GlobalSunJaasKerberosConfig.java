@@ -27,7 +27,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
  */
 public class GlobalSunJaasKerberosConfig implements BeanPostProcessor, InitializingBean {
 
-    private boolean debug = false;
+    private boolean debug;
 
     private String krbConfLocation;
 

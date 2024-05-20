@@ -202,8 +202,7 @@ public class KerberosRestTemplate extends RestTemplate {
 		BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
 		credentialsProvider.setCredentials(new AuthScope(null, -1), credentials);
 		builder.setDefaultCredentialsProvider(credentialsProvider);
-		CloseableHttpClient httpClient = builder.build();
-		return httpClient;
+		return builder.build();
 	}
 
 	/**
@@ -213,12 +212,11 @@ public class KerberosRestTemplate extends RestTemplate {
 	 */
 	private LoginContext buildLoginContext() throws LoginException {
 		ClientLoginConfig loginConfig = new ClientLoginConfig(keyTabLocation, userPrincipal, password, loginOptions);
-		Set<Principal> princ = new HashSet<Principal>(1);
+		Set<Principal> princ = new HashSet<>(1);
 		princ.add(new KerberosPrincipal(userPrincipal));
 		Subject sub = new Subject(false, princ, new HashSet<Object>(), new HashSet<Object>());
 		CallbackHandler callbackHandler = new CallbackHandlerImpl(userPrincipal, password);
-		LoginContext lc = new LoginContext("", sub, callbackHandler, loginConfig);
-		return lc;
+		return new LoginContext("", sub, callbackHandler, loginConfig);
 	}
 
 	@Override
@@ -247,7 +245,7 @@ public class KerberosRestTemplate extends RestTemplate {
 		return super.doExecute(url, uriTemplate, method, requestCallback, responseExtractor);
 	}
 
-	private static class ClientLoginConfig extends Configuration {
+	private static final class ClientLoginConfig extends Configuration {
 
 		private final String keyTabLocation;
 		private final String userPrincipal;
@@ -265,7 +263,7 @@ public class KerberosRestTemplate extends RestTemplate {
 		@Override
 		public AppConfigurationEntry[] getAppConfigurationEntry(String name) {
 
-			Map<String, Object> options = new HashMap<String, Object>();
+			Map<String, Object> options = new HashMap<>();
 
 			// if we don't have keytab or principal only option is to rely on
 			// credentials cache.
@@ -308,7 +306,7 @@ public class KerberosRestTemplate extends RestTemplate {
 
 	}
 
-	private static class CallbackHandlerImpl implements CallbackHandler {
+	private static final class CallbackHandlerImpl implements CallbackHandler {
 
 		private final String userPrincipal;
 		private final String password;

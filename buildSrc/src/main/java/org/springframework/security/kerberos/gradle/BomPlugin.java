@@ -35,10 +35,9 @@ class BomPlugin implements Plugin<Project> {
 
 		// bom should have modules
 		DependencyConstraintHandler constraints = project.getDependencies().getConstraints();
-		project.getRootProject().getAllprojects().forEach(p -> {
+		project.getRootProject().getAllprojects().forEach(p ->
 			p.getPlugins().withType(ModulePlugin.class, m -> {
 				constraints.add("api", p);
-			});
-		});
+			}));
 	}
 }

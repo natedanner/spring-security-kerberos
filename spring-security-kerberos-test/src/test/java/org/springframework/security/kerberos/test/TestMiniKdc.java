@@ -51,7 +51,7 @@ public class TestMiniKdc extends KerberosSecurityTestcase {
 
 		if (System.getProperty("java.vendor").contains("IBM")) {
 			return ibmTechnologyEditionSecurityModules
-					.stream().anyMatch((module) -> isSystemClassAvailable(module));
+					.stream().anyMatch(TestMiniKdc::isSystemClassAvailable);
 		}
 
 		return false;
@@ -80,7 +80,7 @@ public class TestMiniKdc extends KerberosSecurityTestcase {
 		kdc.createPrincipal(new File(workDir, "keytab"), "foo/bar", "bar/foo");
 		List<PrincipalName> principalNameList = Keytab.loadKeytab(new File(workDir, "keytab")).getPrincipals();
 
-		Set<String> principals = new HashSet<String>();
+		Set<String> principals = new HashSet<>();
 		for (PrincipalName principalName : principalNameList) {
 			principals.add(principalName.getName());
 		}
@@ -89,7 +89,7 @@ public class TestMiniKdc extends KerberosSecurityTestcase {
 
 	}
 
-	private static class KerberosConfiguration extends Configuration {
+	private static final class KerberosConfiguration extends Configuration {
 		private String principal;
 		private String keytab;
 		private boolean isInitiator;
@@ -119,7 +119,7 @@ public class TestMiniKdc extends KerberosSecurityTestcase {
 
 		@Override
 		public AppConfigurationEntry[] getAppConfigurationEntry(String name) {
-			Map<String, String> options = new HashMap<String, String>();
+			Map<String, String> options = new HashMap<>();
 			options.put("principal", principal);
 			options.put("refreshKrb5Config", "true");
 			if (IBM_JAVA) {
@@ -157,7 +157,7 @@ public class TestMiniKdc extends KerberosSecurityTestcase {
 			File keytab = new File(workDir, "foo.keytab");
 			kdc.createPrincipal(keytab, principal);
 
-			Set<Principal> principals = new HashSet<Principal>();
+			Set<Principal> principals = new HashSet<>();
 			principals.add(new KerberosPrincipal(principal));
 
 			// client login

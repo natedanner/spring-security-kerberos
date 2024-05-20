@@ -24,7 +24,7 @@ public class KerberosTicketValidation {
 	}
 
 	public KerberosTicketValidation(String username, String servicePrincipal, byte[] responseToken, GSSContext gssContext, GSSCredential delegationCredential) {
-		final HashSet<KerberosPrincipal> princs = new HashSet<KerberosPrincipal>();
+		final HashSet<KerberosPrincipal> princs = new HashSet<>();
 		princs.add(new KerberosPrincipal(servicePrincipal));
 
 		this.username = username;

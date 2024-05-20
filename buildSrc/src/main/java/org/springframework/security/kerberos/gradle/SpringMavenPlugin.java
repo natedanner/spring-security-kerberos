@@ -65,16 +65,16 @@ public class SpringMavenPlugin implements Plugin<Project> {
 	private void customizeMavenPublication(MavenPublication publication, Project project) {
 		customizePom(publication.getPom(), project);
 		project.getPlugins().withType(JavaPlugin.class)
-				.all((javaPlugin) -> customizeJavaMavenPublication(publication, project));
+				.all(javaPlugin -> customizeJavaMavenPublication(publication, project));
 		suppressMavenOptionalFeatureWarnings(publication);
 	}
 
 	private void customizeJavaMavenPublication(MavenPublication publication, Project project) {
 		addMavenOptionalFeature(project);
-		publication.versionMapping((strategy) -> strategy.usage(Usage.JAVA_API, (mappingStrategy) -> mappingStrategy
+		publication.versionMapping(strategy -> strategy.usage(Usage.JAVA_API, mappingStrategy -> mappingStrategy
 				.fromResolutionOf(JavaPlugin.RUNTIME_CLASSPATH_CONFIGURATION_NAME)));
 		publication.versionMapping(
-				(strategy) -> strategy.usage(Usage.JAVA_RUNTIME, VariantVersionMappingStrategy::fromResolutionResult));
+				strategy -> strategy.usage(Usage.JAVA_RUNTIME, VariantVersionMappingStrategy::fromResolutionResult));
 	}
 
 	private void suppressMavenOptionalFeatureWarnings(MavenPublication publication) {
@@ -85,7 +85,7 @@ public class SpringMavenPlugin implements Plugin<Project> {
 	private void addMavenOptionalFeature(Project project) {
 		JavaPluginExtension extension = project.getExtensions().getByType(JavaPluginExtension.class);
 		extension.registerFeature("mavenOptional",
-				(feature) -> feature.usingSourceSet(extension.getSourceSets().getByName("main")));
+				feature -> feature.usingSourceSet(extension.getSourceSets().getByName("main")));
 		AdhocComponentWithVariants javaComponent = (AdhocComponentWithVariants) project.getComponents()
 				.findByName("java");
 		if (javaComponent != null) {
@@ -108,7 +108,7 @@ public class SpringMavenPlugin implements Plugin<Project> {
 		// TODO: find something better not to add dependencyManagement in pom
 		//       which result spring-security-kerberos-management in it. spring-security-kerberos-bom
 		//       has its own dependencyManagement which we need to keep
-		if (!project.getName().equals("spring-security-kerberos-bom")) {
+		if (!"spring-security-kerberos-bom".equals(project.getName())) {
 			pom.withXml(xxx -> {
 				Node pomNode = xxx.asNode();
 				List<?> childs = pomNode.children();
@@ -116,7 +116,7 @@ public class SpringMavenPlugin implements Plugin<Project> {
 				while (iter.hasNext()) {
 					Object next = iter.next();
 					if (next instanceof Node) {
-						if (((Node)next).name().toString().equals("{http://maven.apache.org/POM/4.0.0}dependencyManagement")) {
+						if ("{http://maven.apache.org/POM/4.0.0}dependencyManagement".equals(((Node)next).name().toString())) {
 							iter.remove();
 						}
 					}
@@ -138,7 +138,7 @@ public class SpringMavenPlugin implements Plugin<Project> {
 	}
 
 	private void customizeDevelopers(MavenPomDeveloperSpec developers) {
-		developers.developer((developer) -> {
+		developers.developer(developer -> {
 			developer.getName().set("Pivotal");
 			developer.getEmail().set("info@pivotal.io");
 			developer.getOrganization().set("Pivotal Software, Inc.");

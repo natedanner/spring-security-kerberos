@@ -27,11 +27,10 @@ public class PublishLocalPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 
-		project.getPlugins().withType(MavenPublishPlugin.class).all(mavenPublish -> {
+		project.getPlugins().withType(MavenPublishPlugin.class).all(mavenPublish ->
 			project.getExtensions().getByType(PublishingExtension.class).getRepositories().maven(maven -> {
 				maven.setName("local");
 				maven.setUrl(new File(project.getRootProject().getBuildDir(), "publications/repos"));
-			});
-		});
+			}));
 	}
 }

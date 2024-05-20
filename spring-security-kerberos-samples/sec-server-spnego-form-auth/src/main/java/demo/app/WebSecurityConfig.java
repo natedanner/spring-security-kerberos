@@ -50,7 +50,7 @@ public class WebSecurityConfig {
 				kerberosServiceAuthenticationProvider);
 
 		http
-			.authorizeHttpRequests((authz) -> authz
+			.authorizeHttpRequests(authz -> authz
 				.requestMatchers("/", "/home").permitAll()
 				.anyRequest().authenticated()
 			)

@@ -81,7 +81,7 @@ public class SpnegoAuthenticationProcessingFilterTest {
 
     private static final String TEST_TOKEN_BASE64 = "VGVzdFRva2Vu";
 
-    private static KerberosTicketValidation UNUSED_TICKET_VALIDATION = mock(KerberosTicketValidation.class);
+	private static final KerberosTicketValidation UNUSED_TICKET_VALIDATION = mock(KerberosTicketValidation.class);
 
     private static final Authentication AUTHENTICATION = new KerberosServiceRequestToken(
             "test", UNUSED_TICKET_VALIDATION, AuthorityUtils.createAuthorityList("ROLE_ADMIN"),

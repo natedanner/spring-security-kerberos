@@ -75,7 +75,7 @@ class ExtractVersionConstraints extends DefaultTask {
 	}
 
 	private void processMetadataDetails(ComponentMetadataDetails details) {
-		details.allVariants((variantMetadata) -> variantMetadata.withDependencyConstraints((dependencyConstraints) -> {
+		details.allVariants(variantMetadata -> variantMetadata.withDependencyConstraints(dependencyConstraints -> {
 			for (DependencyConstraintMetadata constraint : dependencyConstraints) {
 				this.versionConstraints.put(constraint.getGroup() + ":" + constraint.getName(),
 						constraint.getVersionConstraint().toString());

@@ -52,18 +52,16 @@ class DocsPlugin implements Plugin<Project> {
 
 		configureYmlPlugins(project, dependencyVersions);
 
-		project.getTasks().withType(GenerateModuleMetadata.class, metadata -> {
-			metadata.setEnabled(false);
-		});
+		project.getTasks().withType(GenerateModuleMetadata.class, metadata ->
+			metadata.setEnabled(false));
 	}
 
 	private void configureYmlPlugins(Project project, ExtractVersionConstraints dependencyVersions) {
-		project.getPlugins().withType(GenerateAntoraYmlPlugin.class, (ymlPlugin) -> {
-			project.getTasks().withType(GenerateAntoraYmlTask.class, (ymlTask) -> {
+		project.getPlugins().withType(GenerateAntoraYmlPlugin.class, ymlPlugin ->
+			project.getTasks().withType(GenerateAntoraYmlTask.class, ymlTask -> {
 				ymlTask.dependsOn(dependencyVersions);
 				configureHtmlOnlyAttributes(project, ymlTask, dependencyVersions);
-			});
-		});
+			}));
 	}
 
 	private void configureHtmlOnlyAttributes(Project project, GenerateAntoraYmlTask ymlTask,

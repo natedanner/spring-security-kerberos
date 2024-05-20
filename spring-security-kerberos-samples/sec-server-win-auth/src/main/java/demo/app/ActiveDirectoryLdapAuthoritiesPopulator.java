@@ -35,7 +35,7 @@ public class ActiveDirectoryLdapAuthoritiesPopulator implements LdapAuthoritiesP
             return AuthorityUtils.NO_AUTHORITIES;
         }
 
-        ArrayList<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(
+        ArrayList<GrantedAuthority> authorities = new ArrayList<>(
                 groups.length);
 
         for (String group : groups) {

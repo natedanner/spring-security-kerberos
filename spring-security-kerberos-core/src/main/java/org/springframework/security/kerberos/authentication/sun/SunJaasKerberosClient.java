@@ -48,8 +48,8 @@ import org.springframework.security.kerberos.authentication.KerberosClient;
  */
 public class SunJaasKerberosClient implements KerberosClient {
 
-    private boolean debug = false;
-    private boolean multiTier = false;
+    private boolean debug;
+    private boolean multiTier;
 
     private static final Log LOG = LogFactory.getLog(SunJaasKerberosClient.class);
 
@@ -102,7 +102,7 @@ public class SunJaasKerberosClient implements KerberosClient {
 
         @Override
         public AppConfigurationEntry[] getAppConfigurationEntry(String name) {
-            HashMap<String, String> options = new HashMap<String, String>();
+            HashMap<String, String> options = new HashMap<>();
             options.put("storeKey", "true");
             if (debug) {
                 options.put("debug", "true");

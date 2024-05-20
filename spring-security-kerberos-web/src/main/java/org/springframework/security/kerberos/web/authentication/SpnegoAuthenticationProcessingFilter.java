@@ -132,7 +132,7 @@ public class SpnegoAuthenticationProcessingFilter extends GenericFilterBean {
             Authentication existingAuth = SecurityContextHolder.getContext().getAuthentication();
 
             if (existingAuth != null && existingAuth.isAuthenticated()
-                    && (existingAuth instanceof AnonymousAuthenticationToken) == false) {
+                    && !(existingAuth instanceof AnonymousAuthenticationToken)) {
                 chain.doFilter(request, response);
                 return;
             }

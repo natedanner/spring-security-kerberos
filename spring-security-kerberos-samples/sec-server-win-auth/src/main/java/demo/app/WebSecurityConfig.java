@@ -66,7 +66,7 @@ public class WebSecurityConfig {
 				activeDirectoryLdapAuthenticationProvider);
 
 		http
-			.authorizeHttpRequests((authz) -> authz
+			.authorizeHttpRequests(authz -> authz
 				.requestMatchers("/", "/home").permitAll()
 				.anyRequest().authenticated()
 			)

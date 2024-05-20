@@ -27,7 +27,7 @@ public class SunJaasKerberosTicketValidatorTests {
 
 	// copy of token taken from a test where windows host
 	// is trying to authenticate with spnego. nothing sensitive here
-	private static String header = "YIIGXAYGKwYBBQUCoIIGUDCCBkygMDAuBgkqhkiC9xIBAgIGCSqGSIb3EgEC"
+	private static final String header = "YIIGXAYGKwYBBQUCoIIGUDCCBkygMDAuBgkqhkiC9xIBAgIGCSqGSIb3EgEC"
 			+ "AgYKKwYBBAGCNwICHgYKKwYBBAGCNwICCqKCBhYEggYSYIIGDgYJKoZIhvcS"
 			+ "AQICAQBuggX9MIIF+aADAgEFoQMCAQ6iBwMFACAAAACjggSFYYIEgTCCBH2g"
 			+ "AwIBBaENGwtFWEFNUExFLk9SR6IiMCCgAwIBAqEZMBcbBEhUVFAbD25lby5l"

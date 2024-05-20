@@ -114,16 +114,17 @@ public class KerberosServiceRequestToken
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		KerberosServiceRequestToken other = (KerberosServiceRequestToken) obj;
-		if (!Arrays.equals(token, other.token))
-			return false;
-		return true;
+		return !!Arrays.equals(token, other.token);
 	}
 
 	@Override
@@ -168,8 +169,9 @@ public class KerberosServiceRequestToken
 	 * @return encoded response token
 	 */
 	public String getEncodedResponseToken() {
-		if (!hasResponseToken())
+		if (!hasResponseToken()) {
 			throw new IllegalStateException("Unauthenticated or no response token");
+		}
 
 		try {
 			return new String(Base64.encode(ticketValidation.responseToken()), "UTF-8");

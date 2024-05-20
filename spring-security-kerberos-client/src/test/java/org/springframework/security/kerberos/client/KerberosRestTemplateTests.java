@@ -86,7 +86,7 @@ class KerberosRestTemplateTests extends KerberosSecurityTestcase {
 	}
 
 	private MockResponse getRequest(RecordedRequest request, byte[] body, String contentType) {
-		if (request.getMethod().equals("OPTIONS")) {
+		if ("OPTIONS".equals(request.getMethod())) {
 			return new MockResponse().setResponseCode(200).setHeader("Allow", "GET, OPTIONS, HEAD, TRACE");
 		}
 		Buffer buf = new Buffer();
@@ -108,7 +108,7 @@ class KerberosRestTemplateTests extends KerberosSecurityTestcase {
 			try {
 				byte[] helloWorldBytes = helloWorld.getBytes(StandardCharsets.UTF_8);
 
-				if (request.getPath().equals("/get")) {
+				if ("/get".equals(request.getPath())) {
 					String header = request.getHeader(AUTHORIZATION);
 					if (header == null) {
 						return new MockResponse().setResponseCode(401).addHeader(WWW_AUTHENTICATE, "Negotiate");

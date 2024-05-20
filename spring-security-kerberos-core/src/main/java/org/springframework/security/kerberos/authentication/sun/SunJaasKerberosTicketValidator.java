@@ -63,9 +63,9 @@ public class SunJaasKerberosTicketValidator implements KerberosTicketValidator, 
     private Resource keyTabLocation;
     private Subject serviceSubject;
     private boolean holdOnToGSSContext;
-    private boolean debug = false;
-    private boolean multiTier = false;
-    private boolean refreshKrb5Config = false;
+    private boolean debug;
+    private boolean multiTier;
+    private boolean refreshKrb5Config;
     private static final Log LOG = LogFactory.getLog(SunJaasKerberosTicketValidator.class);
 
     @Override
@@ -108,7 +108,7 @@ public class SunJaasKerberosTicketValidator implements KerberosTicketValidator, 
                 this.multiTier,
                 this.debug,
                 this.refreshKrb5Config);
-        Set<Principal> princ = new HashSet<Principal>(1);
+        Set<Principal> princ = new HashSet<>(1);
         princ.add(new KerberosPrincipal(this.servicePrincipal));
         Subject sub = new Subject(false, princ, new HashSet<Object>(), new HashSet<Object>());
         LoginContext lc = new LoginContext("", sub, null, loginConfig);
@@ -301,7 +301,7 @@ public class SunJaasKerberosTicketValidator implements KerberosTicketValidator, 
 
         @Override
         public AppConfigurationEntry[] getAppConfigurationEntry(String name) {
-            HashMap<String, String> options = new HashMap<String, String>();
+            HashMap<String, String> options = new HashMap<>();
             options.put("useKeyTab", "true");
             options.put("keyTab", this.keyTabLocation);
             options.put("principal", this.servicePrincipalName);

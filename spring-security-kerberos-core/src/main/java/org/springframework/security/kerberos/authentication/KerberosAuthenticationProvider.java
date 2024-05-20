@@ -49,7 +49,7 @@ public class KerberosAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public boolean supports(Class<? extends Object> authentication) {
-        return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
+        return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
     }
 
     /**
